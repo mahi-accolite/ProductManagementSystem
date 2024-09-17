@@ -67,6 +67,7 @@ namespace ProductManagement.Tests
             // Act & Assert
             await Assert.ThrowsAsync<NotFoundException>(() => _productService.GetProductById(invalidId));
         }
+
         [Fact]
         public async Task CreateProduct_ShouldThrowException_WhenValidationFails()
         {
@@ -121,6 +122,7 @@ namespace ProductManagement.Tests
             _validator.Verify(v => v.Check(invalidProductDto), Times.Once);
             _mockProductRepository.Verify(repo => repo.Update(It.IsAny<ProductRecord>()), Times.Never);
         }
+        
         [Fact]
         public async Task UpdateProduct_ValidProductDto_UpdatesProduct()
         {

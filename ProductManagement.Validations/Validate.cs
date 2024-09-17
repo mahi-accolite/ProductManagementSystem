@@ -1,6 +1,5 @@
 ﻿namespace ProductManagement.Validations
 {
-
     public static class Validate
     {
         public static ValidationBuilder Begin()
