@@ -21,7 +21,7 @@ namespace ProductManagement.Tests
         {
             // Arrange
             var product1 = product.ProductRecordList()[0];
-            var product2 = product.ProductRecordList()[0];
+            var product2 = product.ProductRecordList()[1];
             await _mockRepository.Create(product1);
             await _mockRepository.Create(product2);
 

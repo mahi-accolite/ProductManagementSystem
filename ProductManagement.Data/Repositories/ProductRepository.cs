@@ -1,46 +1,53 @@
 using ProductManagement.Data.Domain;
 using ProductManagement.Data.Exceptions;
-using System.Security.Principal;
+using System.Collections.Concurrent;
 
-namespace ProductManagement.Data.Repositories;
-
-public class ProductRepository : IProductRepository
+namespace ProductManagement.Data.Repositories
 {
-    private readonly List<ProductRecord> products = [];
-
-    public async Task<IEnumerable<ProductRecord>> GetAll()
+    public class ProductRepository : IProductRepository
     {
-        return await Task.FromResult(products);
-    }
+        private readonly ConcurrentDictionary<Guid, ProductRecord> products = new ConcurrentDictionary<Guid, ProductRecord>();
 
-    public async Task<ProductRecord> GetById(Guid id)
-    {
-        var product = products.FirstOrDefault(product => product.Id == id);
-        if(product == null)
+        public Task<IEnumerable<ProductRecord>> GetAll()
         {
-           throw new NotFoundException("Product is not available.");
+            var allProducts = products.Values.ToArray();
+            return Task.FromResult((IEnumerable<ProductRecord>)allProducts);
         }
-        return await Task.FromResult(product);
-    }
 
-    public async Task<ProductRecord> Create(ProductRecord productRecord)
-    {
-        await Task.Run(() => products.Add(productRecord));
-        return productRecord;
-    }
-
-    public async Task Update(ProductRecord productRecord)
-    {
-        int index = -1;
-        await Task.Run(() =>
+        public Task<ProductRecord> GetById(Guid id)
         {
-            index = products.FindIndex(x => x.Id == productRecord.Id);
-            if (index == -1)
+            if (products.TryGetValue(id, out var product))
+            {
+                return Task.FromResult(product);
+            }
+            else
             {
                 throw new NotFoundException("Product is not available.");
             }
-            products[index] = productRecord;
-        });
-    }
+        }
 
+        public Task<ProductRecord> Create(ProductRecord productRecord)
+        {
+            if (products.TryAdd(productRecord.Id, productRecord))
+            {
+                return Task.FromResult(productRecord);
+            }
+            else
+            {
+                throw new InvalidOperationException("Product already exists.");
+            }
+        }
+        public Task Update(ProductRecord productRecord)
+        {
+            if (products.ContainsKey(productRecord.Id))
+            {
+                products[productRecord.Id] = productRecord;
+                return Task.CompletedTask;
+            }
+            else
+            {
+                throw new NotFoundException("Product is not available.");
+            }
+        }
+    }
 }
