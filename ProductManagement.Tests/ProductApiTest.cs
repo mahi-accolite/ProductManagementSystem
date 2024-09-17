@@ -20,8 +20,7 @@ namespace ProductManagement.Tests
             _mockProductService = new Mock<IProductService>();
             _controller = new ProductController(_mockProductService.Object);
             product = new Product();
-            record = product.ProductDTOList();
-            
+            record = product.ProductDTOList();    
         }
 
         [Fact]
@@ -66,8 +65,6 @@ namespace ProductManagement.Tests
             // Assert
             Assert.IsType<OkResult>(result);
         }
-
-
 
         [Fact]
         public async Task AddProduct_ValidProductDto_ReturnsCreatedAtAction()
