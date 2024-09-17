@@ -1,4 +1,3 @@
-
 namespace ProductManagement.Data.Domain;
 
 public class ProductRecord : BaseRecord

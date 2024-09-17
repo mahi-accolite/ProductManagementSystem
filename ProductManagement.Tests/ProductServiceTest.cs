@@ -88,9 +88,9 @@ namespace ProductManagement.Tests
             var expectedProductRecord = _testProducts.First();
             var productdto = ProductMapper.ToProductDTO(expectedProductRecord);
             _mockProductRepository.Setup(repo => repo.Create(It.Is<ProductRecord>(pr =>
-            pr.Name == expectedProductRecord.Name &&
-            pr.Price == expectedProductRecord.Price)))
-            .ReturnsAsync(expectedProductRecord);
+                pr.Name == expectedProductRecord.Name &&
+                pr.Price == expectedProductRecord.Price)))
+                .ReturnsAsync(expectedProductRecord);
             // Act
             var result = await _productService.CreateProduct(productdto);
 

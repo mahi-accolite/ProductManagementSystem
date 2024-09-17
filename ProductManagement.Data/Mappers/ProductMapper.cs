@@ -25,18 +25,4 @@ public static class ProductMapper
             StockQuantity = productDto.StockQuantity
         };
     }
-    //public static void ToProductDTO(ProductRecord productRecord, ProductDto productDto)
-    //{
-    //    productDto.Id = productRecord.Id;
-    //    productDto.Name = productRecord.Name;
-    //    productDto.Price = productRecord.Price;
-    //    productDto.StockQuantity = productRecord.StockQuantity;
-    //}
-
-    //public static void ToProductRecord(ProductDto productDto, ProductRecord productRecord)
-    //{
-    //    productRecord.Name = productDto.Name;
-    //    productRecord.Price = productDto.Price;
-    //    productRecord.StockQuantity = productDto.StockQuantity;
-    //}
 }

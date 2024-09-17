@@ -1,6 +1,5 @@
 ﻿using ProductManagement.Data.DTO;
 using ProductManagement.Services.Models.Validators;
-using ProductManagement.Data.Exceptions;
 using ProductManagement.Validations;
 
 namespace ProductManagement.Tests

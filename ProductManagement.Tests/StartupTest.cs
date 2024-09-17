@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Moq;
 using ProductManagement.API.Filters;
 using ProductManagement.Data.Repositories;
 using ProductManagement.Services.Services;
 using ProductManagement.Services.Models.Validators;
-using Xunit;
 using ProductManagement.Data.Models.Validators;
 
 namespace ProductManagement.Tests
