@@ -67,7 +67,20 @@ namespace ProductManagement.Tests
             // Act & Assert
             await Assert.ThrowsAsync<NotFoundException>(() => _productService.GetProductById(invalidId));
         }
+        [Fact]
+        public async Task CreateProduct_ShouldThrowException_WhenValidationFails()
+        {
+            // Arrange
+            var productDto = new ProductDto { Name = "Invalid Product", Price = -5.0m }; // Invalid price
 
+            _validator.Setup(v => v.Check(productDto)).Throws(new ArgumentException("Invalid product"));
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => _productService.CreateProduct(productDto));
+
+            // Verify that the repository method was not called
+            _mockProductRepository.Verify(r => r.Create(It.Is<ProductRecord>(pr=>pr.Name == productDto.Name)), Times.Never);
+        }
         [Fact]       
         public async Task CreateProduct_ValidProductDto_CreatesProduct()
         {

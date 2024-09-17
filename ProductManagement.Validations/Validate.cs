@@ -46,7 +46,6 @@
                 return this;
             }
 
-
             public ValidationBuilder Check()
             {
                 if (_errors.Any())
